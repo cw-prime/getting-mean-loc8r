@@ -3,7 +3,7 @@ var gracefulShutdown;
 var dbUri = 'mongodb://localhost/Loc8r';
 
 if (process.env.NODE_ENV === 'production') {
-    dbUri = process.env.MONGOLAB_URI;
+    dbUri = process.env.MONGODB_URI;
 }
 
 mongoose.connect(dbUri);
