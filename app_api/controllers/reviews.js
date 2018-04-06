@@ -20,7 +20,7 @@ var updateAverageRating = function(locationId) {
 var setAverageRating = function(location) {
     var i, reviewCount, ratingAverage, ratingTotal;
     if (location.reviews && location.reviews.length > 0) {
-        reviewCount = locaiton.reviews.length;
+        reviewCount = location.reviews.length;
         ratingTotal = 0;
         
         for (i = 0; i < reviewCount; i++) {

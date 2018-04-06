@@ -31,7 +31,7 @@ mongoose.connection.on('disconnected', function() {
     console.log('Mongoose disconnected');
 });
 
-gracefulShutdown = function(msg, callback) {
+var gracefulShutdown = function(msg, callback) {
     mongoose.connection.close(function() {
         console.log('Mongoose disconnected through ' + msg);
         callback;

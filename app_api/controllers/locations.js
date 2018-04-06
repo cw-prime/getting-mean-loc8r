@@ -10,31 +10,41 @@ var theEarth = (function() {
     var earthRadius = 6371 // in km
 
     var getDistanceFromRads = function(rads) {
+        // cosole.log('rads => ' + rads);
+        // cosole.log('dist => ' + rads * earthRadius);
         return parseFloat(rads * earthRadius);
     };
 
     var getRadsFromDistance = function(distance) {
+        // cosole.log('dist => ' + distance);
+        // cosole.log('rads => ' + distance / earthRadius);
         return parseFloat(distance / earthRadius);
     };
-});
+
+    return {
+      getDistanceFromRads: getDistanceFromRads,
+      getRadsFromDistance: getRadsFromDistance
+    };
+})();
 
 module.exports.locationsReadOne = function(req, res) {
+    // console.log('locationsReadOne');
     if (req.params && req.params.locationId) {
         locationModel.findById(req.params.locationId)
             .exec(function(err, location) {
                 if (!location) {
-                    sendJsonReponse(res, 404, {
+                    sendJSONresponse(res, 404, {
                         "message": "locationId not found"
                     });
                     return;
                 } else if (err) {
-                    sendJsonReponse(res, 404, err);
+                    sendJSONresponse(res, 404, err);
                     return;
                 }
-                sendJsonReponse(res, 200, location);
+                sendJSONresponse(res, 200, location);
             })
     } else {
-        sendJsonReponse(res, 404, {
+        sendJSONresponse(res, 404, {
             "message": "No locationId in request"
         });
     }
@@ -42,28 +52,33 @@ module.exports.locationsReadOne = function(req, res) {
 
 module.exports.locationListByDistance = function(req, res) {
     var lng = parseFloat(req.query.lng);
-    var lat = parseFlaot(req.query.lat);
+    var lat = parseFloat(req.query.lat);
+    var maxDistance = parseFloat(req.query.maxDistance);
+
     var point = {
         type: "Point",
         coordinates: [lng, lat]
     };
+
     var geoOptions = {
         spherical: true,
-        maxDistance: theEarth.getRadsFromDistance(20),
+        maxDistance: theEarth.getRadsFromDistance(maxDistance),
         num: 10
     };
-    if (!lng || !lat) {
+
+    if ((!lng && lng !== 0) || (!lat && lat !==0) || !maxDistance) {
         sendJSONresponse(res, 404, {
-            "message": "lng and lat query parameters are required"
+            "message": "lng, lat and maxDistance query parameters are required"
         });
         return;
     }
-    locationModel.geoSearch(point, geoOptions, function(err, results, stats) {
+    locationModel.geoNear(point, geoOptions, function(err, results, stats) {
         var locations = [];
         if (err) {
             sendJSONresponse(res, 404, err);
         } else {
             results.forEach(function(doc) {
+                console.log(JSON.stringify(doc));
                 locations.push({
                     distance: theEarth.getDistanceFromRads(doc.dis),
                     name: doc.obj.name,
@@ -73,6 +88,7 @@ module.exports.locationListByDistance = function(req, res) {
                     _id: doc.obj._id
                 });
             });
+
             sendJSONresponse(res, 200, locations);
         }
     });

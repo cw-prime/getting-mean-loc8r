@@ -8,5 +8,4 @@ block content
   
   .row
     .col-md-6.col-sm-12
-      p
-        | Loca8r was created to help people find places to sit down and get a bit of work done.
+      p !{(content).replace(/\n/g, '<br/>')}
