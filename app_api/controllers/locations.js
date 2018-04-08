@@ -10,14 +10,10 @@ var theEarth = (function() {
     var earthRadius = 6371 // in km
 
     var getDistanceFromRads = function(rads) {
-        // cosole.log('rads => ' + rads);
-        // cosole.log('dist => ' + rads * earthRadius);
         return parseFloat(rads * earthRadius);
     };
 
     var getRadsFromDistance = function(distance) {
-        // cosole.log('dist => ' + distance);
-        // cosole.log('rads => ' + distance / earthRadius);
         return parseFloat(distance / earthRadius);
     };
 
@@ -28,7 +24,6 @@ var theEarth = (function() {
 })();
 
 module.exports.locationsReadOne = function(req, res) {
-    // console.log('locationsReadOne');
     if (req.params && req.params.locationId) {
         locationModel.findById(req.params.locationId)
             .exec(function(err, location) {
@@ -62,7 +57,7 @@ module.exports.locationListByDistance = function(req, res) {
 
     var geoOptions = {
         spherical: true,
-        maxDistance: theEarth.getRadsFromDistance(maxDistance),
+        maxDistance: maxDistance * 1000,
         num: 10
     };
 

@@ -6,7 +6,7 @@ block content
       h1= pageHeader.title
   .row
     .col-xs-12.col-md-6
-      form.form-horizontal(action="", method="post", role="form")
+      form.form-horizontal(action="#{url}", method="post", role="form")
         -if (error == "val")
           .alert.alert-danger(role="alert") All fields are required, please try again
         .form-group
@@ -26,5 +26,6 @@ block content
           label.col-sm-2.control-label(for="review") Review
           .col-sm-10
             textarea#review.form-control(name="review", rows="5")
-      button.btn.btn-default.pull-right Add my review
-  .col-xs-12.col-md-4        
+        .form-group
+          button.btn.btn-default.pull-right(type="submit") Add my review
+    .col-xs-12.col-md-4        

@@ -5,7 +5,7 @@ include  _includes/sharedHTMLfunctions
 block content
   .row.page-header
     .col-lg-12
-      h1 Starcups
+      h1= location.name
 
   .row
     .col-xs-12.col-md-9
@@ -14,10 +14,10 @@ block content
           p.rating
             +outputRating(location.rating)
           p.address= location.address
-          .panel.panel-primary
-            .panel-heading
+          .panel.panel-primary.times-panel
+            .panel-heading.times-heading
               h2.panel-title Opening Hours
-            .panel-body
+            .panel-body.times-container
               each time in location.openingTimes
                 p 
                   | #{time.days} :
@@ -25,39 +25,39 @@ block content
                     | closed
                   else
                     | #{time.opening} - #{time.closing}
-          .panel.panel-primary
-            .panel-heading
+          .panel.panel-primary.facilities-panel
+            .panel-heading.facilities-heading
               h2.panel-title Facilities
-            .panel-body
+            .panel-body.facilities-container
               each facility in location.facilities
                 span.label.label-warning
                   span.glyphnicon.glyphicon-ok
                     | &nbsp;#{facility}
                 | &nbsp;
-    .col-xs-12.col-sm-6.location-map
-      .panel.panel-primary
-        .panel-heading
-          h2.panel-title Location Map
-        .panel-body
-          img.img-response.img-rounded(sec='http://maps.googleapis.com/maps/api/staticmap?center=#{location.coords.lat},#{location.coords.lng},17&zoom=17&size=400x350&sensor=false&markers=#{location.coords.lat},#{location.coords.lng},17&scale=2')
-  .row 
-    .col-xs-12
-      .panel.panel-primary.review-panel
-        .panel-heading
-          a.btn.btn-default.pull-right(href='/location/#{location._id}/review/new') Add review
-          h2.panel-title Customer review
-        .panel-body.review-container
-          each review in location.reviews
-            .row
-              .review
-                .well.well-sm-review-header
-                  span-rating
-                    +outputRating(review.rating)
-                  span.reviewAuthor #{review.author}
-                  small.reviewTimestamp
-                    +formatDate(review.createdOn)
-                .col-xs-12
-                  p !{(review.reviewText).replace(/\n/g, '<br/>')}
+        .col-xs-12.col-sm-6.location-map
+          .panel.panel-primary.location-panel
+            .panel-heading.location-heading
+              h2.panel-title Location Map
+            .panel-body.location-container
+              img.img-fluid.rounded(src='http://maps.googleapis.com/maps/api/staticmap?center=#{location.coords.lat},#{location.coords.lng}&zoom=15&size=260x200&sensor=false&markers=#{location.coords.lat},#{location.coords.lng}&scale=2&key=#{googleMapsApiKey}')
+      .row 
+        .col-xs-12
+          .panel.panel-primary.review-panel
+            .panel-heading.review-heading
+              a.btn.btn-default.pull-right(href='/location/#{location._id}/review/new') Add review
+              h2.panel-title Customer review
+            .panel-body.review-container
+              each review in location.reviews
+                .row
+                  .review
+                    .well.well-sm-review-header
+                      span-rating
+                        +outputRating(review.rating)
+                      span.reviewAuthor #{review.author}
+                      small.reviewTimestamp
+                        +formatDate(review.createdOn)
+                    .col-xs-12
+                      p !{(review.reviewText).replace(/\n/g, '<br/>')}
 
     .col-xs-12.col-md-3
       p.lead #{location.name} #{sidebar.context}

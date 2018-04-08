@@ -1,5 +1,5 @@
 {
-  "name": "src",
+  "name": "Getting MEAN - Loc8r",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
     "npm": "~3.10.10"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",

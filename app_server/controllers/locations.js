@@ -111,7 +111,9 @@ var renderReviewForm = function(req, res, location) {
     title: 'Review ' + location.name + ' on Loc8r',
     pageHeader: {title: 'Review ' + location.name},
     id: location._id,
-    error: req.query.err
+    error: req.query.err,
+    url: req.originalUrl,
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
   })
 };
 
@@ -130,7 +132,7 @@ var doAddReview = function(req, res) {
   var postData = {
     author: req.body.name,
     rating: parseInt(req.body.rating, 10),
-    reviewText: req.body.text
+    reviewText: req.body.review
   };
 
   var requestOptions = {
@@ -139,17 +141,24 @@ var doAddReview = function(req, res) {
     json: postData
   };
 
+  console.log('author => ' + postData.author);
+  console.log('rating => ' + postData.rating);
+  console.log('reviewText => ' + postData.reviewText);
   if (!postData.author || !postData.rating || !postData.reviewText) {
+    console.log('data not filled properly');
     res.redirect('location/' + locationId + '/review/new?err=val');
   } else {
     request(
       requestOptions,
       function(err, response, body) {
         if (response.statusCode === 201) {
+          console.log('good response');
           res.redirect('/location/' + locationId);
         } else if (response.statusCode === 400 && body.name && body.name === "ValidationError") {
+          console.log('validtion problem');
           res.redirect('/location/' + locationId + '/reviews/new?err=val');
         } else {
+          console.log('bad response');
           _showError(req, response.statusCode);
         }
       }
