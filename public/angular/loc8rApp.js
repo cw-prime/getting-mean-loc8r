@@ -62,7 +62,7 @@ var locationListController = function($scope, loc8rData, geoLocation) {
     $scope.getData = function(position) {
         var lat = position.coords.latitude;
             lng = position.coords.longitude;
-            console.log('lat => ' + lat + ', lng => ' + lng);
+
         $scope.message = "Searching for nearby places";
         loc8rData.locationByCoords(lat, lng)
             .then(function successCallback(response) {
