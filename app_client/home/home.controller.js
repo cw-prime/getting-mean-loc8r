@@ -3,7 +3,7 @@
         .module('loc8rApp')
         .controller('homeController', homeController);
 
-    homeController.$inject = ['$scope', 'loc8rData', 'geolocation'];
+    homeController.$inject = ['$scope', 'loc8rData', 'geoLocation'];
     function homeController($scope, loc8rData, geoLocation) {
         var vm = this;
         vm.pageHeader = {

@@ -1,9 +1,9 @@
 (function() {
     angular
         .module('loc8rApp')
-        .service('geolocation', geolocation);
+        .service('geoLocation', geoLocation);
 
-    var geoLocation = function() {
+    function geoLocation() {
         var getPosition = function(successCallback, errorCallback, noGeoCallback) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(successCallback, errorCallback);

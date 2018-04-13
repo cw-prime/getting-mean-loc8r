@@ -8,7 +8,7 @@
             scope: {
                 rating: '=rating'
             },
-            templateUrl: '/common/directives/ratingStars/template/html'
+            templateUrl: '/common/directives/ratingStars/ratingStars.template.html'
         };
     }
 })();
