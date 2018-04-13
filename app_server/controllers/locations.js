@@ -141,24 +141,17 @@ var doAddReview = function(req, res) {
     json: postData
   };
 
-  console.log('author => ' + postData.author);
-  console.log('rating => ' + postData.rating);
-  console.log('reviewText => ' + postData.reviewText);
   if (!postData.author || !postData.rating || !postData.reviewText) {
-    console.log('data not filled properly');
     res.redirect('location/' + locationId + '/review/new?err=val');
   } else {
     request(
       requestOptions,
       function(err, response, body) {
         if (response.statusCode === 201) {
-          console.log('good response');
           res.redirect('/location/' + locationId);
         } else if (response.statusCode === 400 && body.name && body.name === "ValidationError") {
-          console.log('validtion problem');
           res.redirect('/location/' + locationId + '/reviews/new?err=val');
         } else {
-          console.log('bad response');
           _showError(req, response.statusCode);
         }
       }
