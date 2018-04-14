@@ -22,6 +22,7 @@ var appClientFilesContents = [
   'app_client/app.js',
   'app_client/home/home.controller.js',
   'app_client/about/about.controller.js',
+  'app_client/locationDetail/locationDetail.controller.js',
   'app_client/common/services/geolocation.service.js',
   'app_client/common/services/loc8rData.service.js',
   'app_client/common/filters/formatDistance.filter.js',
@@ -39,12 +40,8 @@ var uglified = uglifyJs.minify(appClientFilesContents, {compress: false});
 fs.writeFile('public/angular/loc8r.min.js', uglified.code, function(err) {
   if (err) {
     console.log(err);
-    console.log(uglified.error);
   } else {
     console.log('Script generated and saved: loc8r.min.js');
-    console.log(uglified.code);
-    console.log(uglified.error);
-    console.log(uglified.warnings);
   }
 });
 

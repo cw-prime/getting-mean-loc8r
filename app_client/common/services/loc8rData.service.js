@@ -9,8 +9,13 @@
             return $http.get('/api/v1/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=20');
         };
 
+        var locationById = function(locationId) {
+            return $http.get('/api/v1/locations/' + locationId);
+        }
+
         return {
-            locationByCoords: locationByCoords
+            locationByCoords: locationByCoords,
+            locationById: locationById
         };
     }
 })();

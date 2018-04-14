@@ -9,8 +9,13 @@
                 controllerAs: 'vm'
             })
             .when('/about', {
-                templateUrl: '/common/views/genericText.template.html',
+                templateUrl: '/common/views/genericText.view.html',
                 controller: 'aboutController',
+                controllerAs: 'vm'
+            })
+            .when('/location/:locationId', {
+                templateUrl: '/locationDetail/locationDetail.view.html',
+                controller: 'locationDetailController',
                 controllerAs: 'vm'
             })
             .otherwise({redirectTo: '/'});

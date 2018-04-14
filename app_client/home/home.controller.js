@@ -5,7 +5,6 @@
 
     homeController.$inject = ['$scope', 'loc8rData', 'geoLocation'];
     function homeController($scope, loc8rData, geoLocation) {
-        console.log('home controller');
         var vm = this;
         vm.pageHeader = {
             title: 'Loc8r',

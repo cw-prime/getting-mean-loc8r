@@ -4,7 +4,6 @@
         .controller('aboutController', aboutController);
 
     function aboutController() {
-        console.log('about controller');
         var vm = this;
         
         vm.pageHeader = {
