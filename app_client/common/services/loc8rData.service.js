@@ -14,7 +14,6 @@
         }
 
         var addReviewByLocationId = function(locationId, data) {
-            console.log('adding a review via POST against API');
             return $http.post('/api/v1/locations/' + locationId + '/reviews', data);
         }
 
