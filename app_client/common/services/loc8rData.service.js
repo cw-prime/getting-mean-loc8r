@@ -13,9 +13,15 @@
             return $http.get('/api/v1/locations/' + locationId);
         }
 
+        var addReviewByLocationId = function(locationId, data) {
+            console.log('adding a review via POST against API');
+            return $http.post('/api/v1/locations/' + locationId + '/reviews', data);
+        }
+
         return {
             locationByCoords: locationByCoords,
-            locationById: locationById
+            locationById: locationById,
+            addReviewByLocationId: addReviewByLocationId
         };
     }
 })();

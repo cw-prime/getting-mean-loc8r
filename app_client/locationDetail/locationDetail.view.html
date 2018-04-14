@@ -48,11 +48,11 @@
                 <div class="col-xs-12">
                     <div class="panel panel-primary review-panel">
                         <div class="panel-heading">
-                            <a href="" class="btn btn-default pull-right">Add rview</a>
+                            <a ng-click="vm.popupReviewForm()" class="btn btn-default pull-right">Add rview</a>
                             <h2 class="panel-title">Customer reviews</h2>
                         </div>
                         <div class="panel-body review-container">
-                            <div class="review" ng-repeat="review in vm.data.location.reviews | orderBy: 'createdOn':true">
+                            <div class="review" ng-repeat="review in vm.data.location.reviews | orderBy: '-createdOn'">
                                 <div class="row">
                                     <div class="well well-sm review-header">
                                         <span class="rating" rating-stars rating="review.rating"></span>
@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-md-3">
-            <p class="lead">{{vm.data.location.name}} is on Loc8r because it has accessiblt wifi and psace to sit down with your laptop and get some work doen.</p>
+            <p class="lead">{{vm.data.location.name}} is on Loc8r because it has accessiblt wifi and space to sit down with your laptop and get some work done.</p>
             <p>If you've ben and you like it - or if you don't - please leave a review to help other people just like you.</p>
         </div>
     </div>
