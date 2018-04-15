@@ -10,7 +10,7 @@
 
         vm.onSubmit = function() {
             vm.formError = "";
-            if (!vm.formData.name || !vm.formData.rating || !vm.formData.reviewText) {
+            if (!vm.formData.rating || !vm.formData.reviewText) {
                 vm.formError = "All fields are required, please try again";
                 return false;
             } else {
@@ -20,7 +20,6 @@
 
         vm.doAddReview = function(locationId, formData) {
             loc8rData.addReviewByLocationId(locationId, {
-                author: formData.name,
                 rating: formData.rating,
                 reviewText: formData.reviewText
             })

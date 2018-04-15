@@ -1,5 +1,34 @@
 var mongoose = require('mongoose');
 var locationModel = mongoose.model('Location');
+var userModel = mongoose.model('User');
+
+var getAuthor = function(req, res, callback) {
+    if (req.payload && req.payload.email) {
+        userModel
+            .findOne({
+                email: req.payload.email
+            })
+            .exec(function(err, user) {
+                if (!user) {
+                    sendJSONresponse(res, 404, {
+                        "message": "User not found"
+                    });
+                    return;
+                } else if (err) {
+                    console.log(err);
+                    sendJSONresponse(res, 404, err);
+                    return;
+                }
+
+                callback(req, res, user.name);
+            });
+    } else {
+        sendJSONresponse(res, 404, {
+            "message": "User not found"
+        });
+        return;
+    }
+};
 
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
@@ -39,14 +68,14 @@ var setAverageRating = function(location) {
     }
 }
 
-var doAddReview = function(req, res, location) {
+var doAddReview = function(req, res, location, author) {
     if (!location) {
         sendJSONresponse(res, 404, {
             "message": "locationId not found"
         });
     } else {
         location.reviews.push({
-            author: req.body.author,
+            author: author,
             rating: req.body.rating,
             reviewText: req.body.reviewText
         });
@@ -110,23 +139,25 @@ module.exports.reviewsReadOne = function(req, res) {
 }
 
 module.exports.reviewsCreate = function(req, res) {
-    var locationId = req.params.locationId;
-    if (locationId) {
-        locationModel
-            .findById(locationId)
-            .select('reviews')
-            .exec(function(err, location) {
-                if (err) {
-                    sendJSONresponse(res, 400, err);
-                } else {
-                    doAddReview(req, res, location);
-                }
-            })
-    } else {
-        sendJSONresponse(res, 404, {
-            "message": "Not found, locationId required"
-        });
-    }
+    getAuthor(req, res, function(req, res, username){
+        var locationId = req.params.locationId;
+        if (locationId) {
+            locationModel
+                .findById(locationId)
+                .select('reviews')
+                .exec(function(err, location) {
+                    if (err) {
+                        sendJSONresponse(res, 400, err);
+                    } else {
+                        doAddReview(req, res, location, username);
+                    }
+                })
+        } else {
+            sendJSONresponse(res, 404, {
+                "message": "Not found, locationId required"
+            });
+        }
+    });
 }
 
 module.exports.reviewsUpdateOne = function(req, res) {
