@@ -61,3 +61,4 @@ process.once('SIGTERM', function() {
 
 // BRING IN YOUR SCHEMAS & MODELS
 require('./locations');
+require('./users');
