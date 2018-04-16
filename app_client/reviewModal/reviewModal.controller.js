@@ -39,7 +39,6 @@
                 $uibModalInstance.close(result);
             },
             cancel: function() {
-                console.log('dismissed');
                 $uibModalInstance.dismiss('cancel');
             }
         };

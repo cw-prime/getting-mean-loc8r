@@ -126,7 +126,6 @@ var addReview = function(req, res) {
 
 /* POST 'Add review' page */
 var doAddReview = function(req, res) {
-  console.log('doAddReview');
   var locationId = req.params.locationId;
   var path = '/api/v1/locations/' + locationId + '/reviews';
   var postData = {

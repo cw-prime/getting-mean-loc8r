@@ -4,16 +4,16 @@
         .service('authentication', authentication);
 
     const TOKEN_NAME = 'loc8r-token';
+    const DELIMITER = '.';
 
     authentication.$inject = ['$http', '$window']
     function authentication($http, $window) {
         var saveToken = function(token) {
-            $window.localStorage['loc8r-token'] = token;
+            $window.localStorage[TOKEN_NAME] = token;
         };
 
         var getToken = function() {
-            console.log('getToken');
-            return $window.localStorage['loc8r-token'];
+            return $window.localStorage[TOKEN_NAME];
         };
 
         var register = function(user) {
@@ -31,16 +31,14 @@
         };
 
         var logout = function() {
-            $window.localStorage.removeItem('loc8r-token');
+            $window.localStorage.removeItem(TOKEN_NAME);
         };
 
         var isLoggedIn = function() {
             var token = getToken();
-            console.log('isLoggedIn: token: ' + token);
             
             if (token) {
-                var payload = JSON.parse($window.atob(token.split('.')[1]));
-                console.log('isLoggedIn: payload: ' + payload);
+                var payload = JSON.parse($window.atob(token.split(DELIMITER)[1]));
 
                 return payload.exp > Date.now() / 1000;
             } else {
@@ -51,7 +49,7 @@
         var currentUser = function() {
             if (isLoggedIn()) {
                 var token = getToken();
-                var payload = JSON.parse($window.atob(token.split('.')[1]));
+                var payload = JSON.parse($window.atob(token.split(DELIMITER)[1]));
 
                 return {
                     email: payload.email,

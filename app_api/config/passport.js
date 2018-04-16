@@ -9,11 +9,9 @@ passport.use(new localStrategy({
         userModel.findOne({
             email: username
         }, function(err, user) {
-            console.log('err: ' + JSON.stringify(err));
             if (err) {
                 return done(err);
             }
-            console.log('user: ' + JSON.stringify(user));
 
             if (!user) {
                 return done(null, false, {

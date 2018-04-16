@@ -73,7 +73,6 @@ module.exports.locationListByDistance = function(req, res) {
             sendJSONresponse(res, 404, err);
         } else {
             results.forEach(function(doc) {
-                console.log(JSON.stringify(doc));
                 locations.push({
                     distance: theEarth.getDistanceFromRads(doc.dis),
                     name: doc.obj.name,

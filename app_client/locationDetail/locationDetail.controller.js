@@ -44,7 +44,6 @@
             });
 
             modalInstance.result.then(function(data) {
-                console.log(JSON.stringify(data));
                 vm.data.location.reviews.push(data);
             });
         };

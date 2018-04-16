@@ -3,8 +3,8 @@
         .module('loc8rApp')
         .controller('navigationController', navigationController);
 
-    navigationController.$inject = ['$location', 'authentication']
-    function navigationController($location, authentication) {
+    navigationController.$inject = ['$window', '$location', 'authentication']
+    function navigationController($window, $location, authentication) {
         var vm = this;
 
         vm.currentPath = $location.path();
@@ -14,10 +14,10 @@
         vm.currentUser = authentication.currentUser();
 
         vm.logout = function() {
-            console.log('logout');
             authentication.logout();
+
             if (vm.currentPath === '/') {
-                $location.reload();
+                $window.location.reload();
             } else {
                 $location.path('/');
             }
